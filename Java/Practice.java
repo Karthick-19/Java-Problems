@@ -1,7 +1,6 @@
 package Java;
 
 import java.util.Scanner;
-import java.lang.reflect.Array;
 import java.util.Arrays;
 
 public class Practice {
@@ -49,18 +48,18 @@ public class Practice {
         int l =0;
         int r = arr.length -1;
         while(l <= r){
-            int m = l +(r - 1) / 2;
+            int m = l +(r - l) / 2;
 
             if(arr[m] == x){
                 System.out.println("Element found at index: "+ m); 
                 break;
             }
 
-            if(x > m){
+            if(x > arr[m]){
                 l +=1;
             }
 
-            else{
+            if(x < arr[m]){
                 r -= 1;
             }
         }

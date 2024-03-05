@@ -12,5 +12,14 @@ public class UncommonCharcter {
             ans^= two.charAt(i);
         }
         System.out.println(ans);
+        int[] arr = {1,4,2,1,3,2,3};
+        System.out.println(SingleCharacterinArray(arr));
+    }
+    public static int SingleCharacterinArray(int[] arr){
+        char res = 0;
+        for(int i = 0;i < arr.length;i++){
+            res ^= arr[i];
+        }
+        return res;
     }
 }
