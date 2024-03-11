@@ -7,9 +7,9 @@ public class Practice {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter the number: ");
-        int num = sc.nextInt();
-        int ans = num*(num +1)/2;
-        System.out.println(ans);        
+        // int num = sc.nextInt();
+        // int ans = num*(num +1)/2;
+        // System.out.println(ans);        
         sc.close();
         System.out.println(Factorial(4));
         printnumwithoutLoop(10);
@@ -19,6 +19,7 @@ public class Practice {
         System.out.println(Arrays.toString(arr));
         binarySearch(arr, 69);
         TomandJerry();
+        rearrange();
 
     }
     public static int Factorial(int f){
@@ -72,4 +73,11 @@ public class Practice {
             else System.out.println(i);
         }
     }
+    public static void we(int x){
+        while(true){
+        if(x % 2 != 0 || x > 30 && x <= 50){ System.out.println("Weird"); break;}
+        if(x > 0 && x <= 30 || x > 50){ System.out.println("Not weird"); break;}
+        }
+    }
+    
 }
