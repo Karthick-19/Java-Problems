@@ -19,7 +19,7 @@ public class Practice {
         System.out.println(Arrays.toString(arr));
         binarySearch(arr, 69);
         TomandJerry();
-        rearrange();
+        // rearrange();
 
     }
     public static int Factorial(int f){

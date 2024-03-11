@@ -17,9 +17,12 @@ public class MaxSum {
                 maxsum = Math.max(maxsum, cursum);
             }
         }
+        int[] nums = {-2,-3,4,-1,-2,1,5,-3};
         System.out.println(maxsum);
         System.out.println(maxSumSlidingWindow(arr, k));
         System.out.println(minSumSlidingWindow(arr, k));
+        System.out.println(maxSubArray0ms(nums));
+        maxSubarray1ms();
     }
     public static int maxSumSlidingWindow(int[] arr,int k){
         int maxsum = 0;
@@ -45,4 +48,27 @@ public class MaxSum {
         }
         return minSum;
     }
+    public static void  maxSubarray1ms(){
+        int[] arr = {-2,-3,4,-1,-2,1,5,-3};
+        int curMax = arr[0];
+        int maxSum = arr[0];
+        for (int i = 1; i < arr.length; i++) {
+            curMax = Math.max(arr[i], curMax+arr[i]);
+            maxSum = Math.max(maxSum, curMax);
+        }
+        System.out.println(maxSum);
+    }
+    
+    public static int maxSubArray0ms(int[] nums) {
+       int sum=0;
+       int max=Integer.MIN_VALUE;
+    for(int i=0;i<nums.length;i++){
+        sum+=nums[i];
+         
+       max=sum>max?sum:max;
+       sum = sum<0 ? 0:sum;
+
+    }
+    return max;
+}
 }
