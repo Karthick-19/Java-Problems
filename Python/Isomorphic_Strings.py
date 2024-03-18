@@ -9,7 +9,8 @@ def isomorphiC(s,t):
         if(a in hmap):
             if(hmap[a] != b): return False
         elif(b in x): return False
-        hmap[a] = b
+        hmap[a] = b 
+        
         x.add(b)
     return True
 print(isomorphiC(s,t))
