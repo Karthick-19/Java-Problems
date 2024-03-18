@@ -10,3 +10,7 @@ def isPangram(s):
             return False
     return True
 print(isPangram(s))
+
+def usingSet(s):
+    return len(set(s)) >= 26
+print(usingSet(s))
