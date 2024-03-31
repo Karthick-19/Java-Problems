@@ -1,0 +1,166 @@
+Table of Contents
+1. Coding Guidelines in Java
+a. Naming conventions
+b. Curley Braces
+c. Indentation
+d. White spaces
+e. Comments
+Coding Guidelines in Java
+Java is the most popular and widely used object-oriented programming language. It provides
+a platform to developers for developing variety of applications like web, desktop application,
+games, etc. The reason of using Java programming language is that it provides security,
+reliability, and also fast. Writing code in Java is a bit difficult because it follows number of
+rules and guidelines that we must follow for better readability.
+What are coding guidelines?
+In Java, the coding guidelines are the set of rules that are followed by the developer during
+application development. These guidelines provide readability to other developer and user
+who are dealing with the project. The guidelines must be followed because an application is
+not developed by a single programmer. Some major coding guidelines includes the following:
+o Naming conventions
+o Curley Braces
+o Indentation
+o White spaces
+o Comments
+Naming Conventions
+These are the rules for naming variables, methods, constants, classes, interfaces, etc.
+Generally, Java follows the camel case convention. It describes the following:
+o The class and interface name must be noun, and the first letter of each internal word
+should be capitalized.
+o The method name must be verb in mixed case, each first letter should be in lower case
+with the first letter of each internal word should be capitalized.
+o All the constants should be in capital letters.
+o The variable name must be a meaningful letter or word.
+Curly Braces
+The use of curly braces is most important in programming. It defines the body of the class,
+methods, and loop. The two standard uses of curly braces are as follows:
+o There should not be a blank line after opening and before closing the braces.
+o A curly brace is applied at the end of the line that denotes the starting of the class,
+method, and loops. The closing braces should by lined up vertically where the opening
+braces is lined up. The closing should be placed at a separate line (new line). For
+example, consider the following loop.
+1. int reverse(int a, float b){
+2. ... for (int i = 0; i < 9; i++){
+3. ....
+4. }
+5. }
+o Each curly brace is added on a new line, and the pair is aligned vertically. The above
+code snippet can be written as follows.
+1. int reverse(int a, float b)
+2. {
+3. ... for (int i = 0; i < 9; i++)
+4. {
+5. ....
+6. }...;
+7. }
+Indentation
+The indentation should be 4 spaces. By pressing the Tab key, we get exactly 8-spaces.
+Indentation can be achieved by the space character and the tab characters.
+The recognized standard for increasing readability of each line is:
+o Apply indentation to alike items in a vertical list (such as end-of-line comments, and
+identifiers in declarations).
+o Surround the binary operators (including assignment) by spaces.
+o Follow a semicolon or comma by a space.
+o Keep space between two keywords like "if", "while", "return", "catch", "switch", "for"
+and a succeeding parenthesis.
+o Excess parentheses help to highlight the structure of expressions. But we should avoid
+many nested parentheses because it may lead to error.
+o It is good to put an extra line to differentiate between the important piece of code.
+Let's implement all the above guidelines in a code:
+White Spaces
+It also plays a vital role in readability of the program. Any mathematical operations (+, -, *, %,
+etc.) should be surrounded by a space character. For example,
+1. a = (b + c) * d;
+2. And not as:
+3. a=(b+c)*d
+Keywords that reserved in Java must followed by white spaces. For example:
+1. //right way
+2. while (true) {...}
+3. //wrong way
+4. while(true){...}
+Always, put a space just after comma. It means comma mut followed by a white space.
+1. //right way
+2. add(a, b, c, d);
+3. //wrong way
+4. add(a, b, c, d);
+Colons should be surrounded by white space. For example, the case statement must be
+written as:
+1. //right way
+2. Case 100 : break;
+3. //wrong way
+4. case 100:break;
+Semicolons in for statements should be followed by a space character. For example: The for
+loop must be initialized as:
+1. //right way
+2. for (i = 0; i < n; i++)
+3. //wrong way
+4. for(i=0;i<n;i++)
+Comments
+Comments in programming, is very important because it enhance the readability of the
+program. It contains the relevant information regarding program. Note that comments are
+ignored by the compiler.
+Why do we use comments in a code?
+o Comments are used to make the program more readable by adding the details of the
+code.
+o It makes easy to maintain the code and to find the errors easily.
+o The comments can be used to provide information or explanation about the variable,
+method, class, or any statement.
+o It can also be used to prevent the execution of program code while testing the
+alternative code.
+Java provides two types of comments:
+o Single line
+o Implementation
+o Block
+o Trailing comments
+Implementation
+It is also started by two forward double slashes. Java also allows us to use /**/ for comments.
+It is used if we do not want to execute a chunk of code. There are four types of
+implementation comments:
+block, single-line, trailing, and temporarily removing code.
+Block Comments
+Block comments provides the description of the method, data structure, and algorithm.
+Generally, it is used at the starting of file, before or within each method. There must have a
+blank line before a block comment have started, unless it comes immediately after starting of
+the compound statements.
+1. //comment 1
+2. //comment 2
+3. //comment 3
+Single line
+The single-line comment is used to comment only one line of the code. It is the widely used
+and easiest way of commenting the statements.
+Single line comments start with two forward slashes (//). It is used when a comment cannot
+be written in a single line. Any text in front of // is not executed by Java.
+1. // a single-line comment
+2. c = a + b;
+Trailing comments
+Trailing (short) comments are the comments that can be write on the same line but should
+maintain a far from the code. If more than one short comment appears, they should all be
+indented to the same tab setting. For example:
+For example:
+1. if (x == 10) {
+2. b = false; // special case
+3. }
+Temporarily Removing Code
+It is used to comment a partial or a complete line. We can also use it in multiline comment.
+Note that it is used only when the code is under development and we want to remove a
+particular chunk of code. The unused code should eventually be physically removed as it can
+make the source more difficult to maintain. For example:
+1. if (x > 1) {
+2. y = x; // + 1;
+3. ...
+4. }
+5. else {
+6. // y = 2;
+7. ...
+8. }
+Documentation Comment
+Documentation comments are usually used to write large programs for a project or software
+application as it helps to create documentation API. These APIs are needed for reference, i.e.,
+which classes, methods, arguments, etc., are used in the code.
+To create documentation API, we need to use the javadoc tool. The documentation comments
+are placed between /** and */.
+Syntax:
+1. /**
+2. *
+3. *We can use various tags to depict the parameter
+4. *or heading or author name
+5. */ 

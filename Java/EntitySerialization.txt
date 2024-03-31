@@ -1,0 +1,979 @@
+Table of Contents
+1. Java EnƟty
+a. EnƟty IntroducƟon
+b. CreaƟng an EnƟty
+2. JPA EnƟty Manager
+a. EnƟty Manager
+b. InserƟng an EnƟty
+c. Finding an EnƟty
+d. UpdaƟng an EnƟty
+e. DeleƟng an EnƟty
+3. SerializaƟon and DeserializaƟon in Java
+a. Java SerializaƟon
+b. Java transient Keyword
+JPA EnƟty IntroducƟon
+In general, enƟty is a group of states associated together in a single unit. On adding behaviour,
+an enƟty behaves as an object and becomes a major consƟtuent of object-oriented paradigm.
+So, an enƟty is an applicaƟon-defined object in Java Persistence Library.
+EnƟty ProperƟes
+These are the properƟes of an enƟty that an object must have: -
+ Persistability - An object is called persistent if it is stored in the database and can be
+accessed anytime.
+ Persistent Identity - In Java, each entity is unique and represents as an object
+identity. Similarly, when the object identity is stored in a database then it is
+represented as persistence identity. This object identity is equivalent to primary key
+in database.
+ Transactionality - Entity can perform various operations such as create, delete,
+update. Each operation makes some changes in the database. It ensures that
+whatever changes made in the database either be succeed or failed atomically.
+ Granuality - Entities should not be primitives, primitive wrappers, or built-in objects
+with single dimensional state.
+EnƟty Metadata
+Each enƟty is associated with some metadata that represents the informaƟon of it. Instead of
+database, this metadata is existed either inside or outside the class. This metadata can be in following
+forms: -
+ Annotation - In Java, annotations are the form of tags that represents metadata. This
+metadata persists inside the class.
+ XML - In this form, metadata persist outside the class in XML file.
+JPA Creating an Entity
+A Java class can be easily transformed into an enƟty. For transformaƟon the basic
+requirements are: -
+ No-argument Constructor.
+ AnnotaƟon
+Here, we will learn how to transform a regular Java class into an enƟty class with the help of an
+example:
+Simple Student class
+1. public class Student {
+2.
+3. private int id;
+4. private String name;
+5. private long fees;
+6. public Student() {}
+7. public Student(int id)
+8. {
+9. this.id = id;
+10. }
+11. public int getId()
+12. {
+13. return id;
+14. }
+15. public void setId(int id)
+16. {
+17. this.id = id;
+18. }
+19. public String getName()
+20. {
+21. return name;
+22. }
+23. public void setName(String name)
+24. {
+25. this.name = name;
+26. }
+27. public long getFees()
+28. {
+29. return fees;
+30. }
+31. public void setFees (long fees)
+32. {
+33. this.fees = fees;
+34. }
+35. }
+Above class is a regular java class having three aƩributes id, name and fees. To transform this
+class into an enƟty, add @EnƟty and @Id annotaƟon in it.
+ @Entity - This is a marker annotaƟon which indicates that this class is an enƟty. This
+annotaƟon must be placed on the class name.
+ @Id - This annotaƟon is placed on a specific field that holds the persistent idenƟfying
+properƟes. This field is treated as a primary key in database.
+Simple EnƟty Class
+1. import javax.persistence.*;
+2. @Entity
+3. public class Student {
+4. @Id
+5. private int id;
+6. private String name;
+7. private long fees;
+8. public Student() {}
+9. public Student(int id)
+10. {
+11. this.id = id;
+12. }
+13. public int getId()
+14. {
+15. return id;
+16. }
+17. public void setId(int id)
+18. {
+19. this.id = id;
+20. }
+21. public String getName()
+22. {
+23. return name;
+24. }
+25. public void setName(String name)
+26. {
+27. this.name = name;
+28. }
+29. public long getFees()
+30. {
+31. return fees;
+32. }
+33. public void setFees (long fees)
+34. {
+35. this.fees = fees;
+36. }
+37. }
+JPA EnƟty Manager
+Following are some of the important roles of an enƟty manager: -
+ The enƟty manager implements the API and encapsulates all of them within a single
+interface.
+ EnƟty manager is used to read, delete and write an enƟty.
+ An object referenced by an enƟty is managed by enƟty manager.
+Steps to persist an enƟty object.
+1. CreaƟng an enƟty manager factory object
+The EnƟtyManagerFactory interface present in java.persistence package is used to provide
+an enƟty manager.
+EntityManagerFactory emf=Persistence.createEntityManagerFactory("
+Student_details");
+ Persistence - The Persistence is a bootstrap class which is used to obtain an
+EnƟtyManagerFactory interface.
+ createEnƟtyManagerFactory() method - The role of this method is to create and
+return an EnƟtyManagerFactory for the named persistence unit. Thus, this method
+contains the name of persistence unit passed in the Persistence.xml file.
+2. Obtaining an enƟty manager from factory.
+EntityManager em=emf.createEntityManager();
+ EnƟtyManager - An EnƟtyManager is an interface
+ createEnƟtyManager() method - It creates new applicaƟon-managed
+EnƟtyManager
+3. InƟalizing an enƟty manager.
+em.getTransaction().begin();
+ getTransacƟon() method - This method returns the resource-level
+EnƟtyTransacƟon object.
+ begin() method - This method is used to start the transacƟon.
+4. PersisƟng a data into relaƟonal database.
+em.persist(s1);
+ persist() - This method is used to make an instance managed and persistent. An
+enƟty instance is passed within this method.
+5. Closing the transacƟon
+em.getTransaction().commit();
+6. Releasing the factory resources.
+emf.close();
+ em.close();
+ close() - This method is used to releasing the factory resources.
+Entity Operations
+we will perform various operations on an entity such as: -
+ InserƟng an EnƟty
+ Finding an EnƟty
+ UpdaƟng an EnƟty
+ DeleƟng an EnƟty
+InserƟng an EnƟty
+In JPA, we can easily insert data into database through enƟƟes. The EnƟtyManager provides
+persist () method to insert records.
+JPA EnƟty InserƟon Example
+Here, we will insert the record of students.
+This example contains the following steps: -
+ Create an enƟty class named as StudentEnƟty.java under com.javatpoint.jpa.student
+package that contains aƩributes s_id, s_name, s_age.
+StudentEntity.java
+1. package com.javatpoint.jpa.student;
+2. import javax.persistence.*;
+3.
+4. @Entity
+5. @Table(name="student")
+6. public class StudentEntity {
+7.
+8. @Id
+9. private int s_id;
+10. private String s_name;
+11. private int s_age;
+12.
+13. public StudentEntity(int s_id, String s_name, int s_a
+ge) {
+14. super();
+15. this.s_id = s_id;
+16. this.s_name = s_name;
+17. this.s_age = s_age;
+18. }
+19.
+20. public StudentEntity() {
+21. super();
+22. }
+23.
+24. public int getS_id() {
+25. return s_id;
+26. }
+27.
+28. public void setS_id(int s_id) {
+29. this.s_id = s_id;
+30. }
+31.
+32. public String getS_name() {
+33. return s_name;
+34. }
+35.
+36. public void setS_name(String s_name) {
+37. this.s_name = s_name;
+38. }
+39.
+40. public int getS_age() {
+41. return s_age;
+42. }
+43.
+44. public void setS_age(int s_age) {
+45. this.s_age = s_age;
+46. }
+47.
+48. }
+ Now, map the entity class and other databases confiuguration in Persistence.xml file.
+Persistence.xml
+1. <persistence>
+2. <persistence-unit name="Student_details">
+3.
+4. <class>com.javatpoint.jpa.student.StudentEntity</class>
+5.
+6. <properties>
+7. <property name="javax.persistence.jdbc.driver" value="com.mysq
+l.jdbc.Driver"/>
+8. <property name="javax.persistence.jdbc.url" value="jdbc:mysql:
+//localhost:3306/studentdata"/>
+9. <property name="javax.persistence.jdbc.user" value="root"/>
+10. <property name="javax.persistence.jdbc.password" value=""
+/>
+11. <property name="eclipselink.logging.level" value="SEVERE"
+/>
+12. <property name="eclipselink.ddlgeneration" value="create-or-extend-tables"/>
+13. </properties>
+14.
+15. </persistence-unit>
+16. </persistence>
+ Create a persistence class named as PersistStudent.java under
+com.javatpoint.jpa.persist package to persist the entity object with data.
+PersistStudent.java
+1. package com.javatpoint.jpa.persist;
+2.
+3. import com.javatpoint.jpa.student.*;
+4. import javax.persistence.*;
+5. public class PersistStudent {
+6.
+7. public static void main(String args[])
+8. {
+9.
+10. EntityManagerFactory emf=Persistence.createEntity
+ManagerFactory("Student_details");
+11. EntityManager em=emf.createEntityManager();
+12.
+13. em.getTransaction().begin();
+14.
+15. StudentEntity s1=new StudentEntity();
+16. s1.setS_id(101);
+17. s1.setS_name("Gaurav");
+18. s1.setS_age(24);
+19.
+20. StudentEntity s2=new StudentEntity();
+21. s2.setS_id(102);
+22. s2.setS_name("Ronit");
+23. s2.setS_age(22);
+24.
+25. StudentEntity s3=new StudentEntity();
+26. s3.setS_id(103);
+27. s3.setS_name("Rahul");
+28. s3.setS_age(26);
+29.
+30. em.persist(s1);
+31. em.persist(s2);
+32. em.persist(s3);
+33.
+34. em.getTransaction().commit();
+35.
+36. emf.close();
+37. em.close();
+38.
+39. }
+40. }
+Output:
+After the execution of the program, the student table is generated under MySQL workbench.
+This table contains the student details.
+To fetch data, run select * from student query in MySQL.
+S_ID S_Name S_AGE
+101 Gaurav 24
+102 Ronit 22
+103 Rahul 26
+Finding an entity
+To find an enƟty, EnƟtyManger interface provides find() method that searches an element on
+the basis of primary key.
+JPA Entity Finding Example
+Here, we will search a particular record and fetch it on the console. This example contains the
+following steps: -
+ Create an entity class named as StudentEntity.java under com.javatpoint.jpa.student
+package that contains attributes s_id, s_name, s_age.
+StudentEntity.java
+1. package com.javatpoint.jpa.student;
+2. import javax.persistence.*;
+3.
+4. @Entity
+5. @Table(name="student")
+6. public class StudentEntity {
+7.
+8. @Id
+9. private int s_id;
+10. private String s_name;
+11. private int s_age;
+12.
+13. public StudentEntity(int s_id, String s_name, int s_a
+ge) {
+14. super();
+15. this.s_id = s_id;
+16. this.s_name = s_name;
+17. this.s_age = s_age;
+18. }
+19.
+20. public StudentEntity() {
+21. super();
+22. }
+23.
+24. public int getS_id() {
+25. return s_id;
+26. }
+27.
+28. public void setS_id(int s_id) {
+29. this.s_id = s_id;
+30. }
+31.
+32. public String getS_name() {
+33. return s_name;
+34. }
+35.
+36. public void setS_name(String s_name) {
+37. this.s_name = s_name;
+38. }
+39.
+40. public int getS_age() {
+41. return s_age;
+42. }
+43.
+44. public void setS_age(int s_age) {
+45. this.s_age = s_age;
+46. }
+47.
+48. }
+ Now, map the entity class and other databases confiuguration in Persistence.xml file.
+Persistence.xml
+1. <persistence>
+2. <persistence-unit name="Student_details">
+3.
+4. <class>com.javatpoint.jpa.student.StudentEntity</class>
+5.
+6. <properties>
+7. <property name="javax.persistence.jdbc.driver" value="com.mysq
+l.jdbc.Driver"/>
+8. <property name="javax.persistence.jdbc.url" value="jdbc:mysql:
+//localhost:3306/studentdata"/>
+9. <property name="javax.persistence.jdbc.user" value="root"/>
+10. <property name="javax.persistence.jdbc.password" value=""
+/>
+11. <property name="eclipselink.logging.level" value="SEVERE"
+/>
+12. <property name="eclipselink.ddlgeneration" value="create-or-extend-tables"/>
+13. </properties>
+14.
+15. </persistence-unit>
+16. </persistence>
+o Create a persistence class named as FindStudent.java under
+com.javatpoint.jpa.find package to persist the entity object with data.
+FindStudent.java
+1. package com.javatpoint.jpa.find;
+2.
+3. import javax.persistence.*;
+4.
+5. import com.javatpoint.jpa.student.*;
+6.
+7. public class FindStudent {
+8. public static void main(String args[])
+9. {
+10. EntityManagerFactory emf=Persistence.createEntity
+ManagerFactory("Student_details");
+11. EntityManager em=emf.createEntityManager();
+12.
+13.
+14.
+15. StudentEntity s=em.find(StudentEntity.class,101);
+
+16.
+17. System.out.println("Student id = "+s.getS_id());
+
+18. System.out.println("Student Name = "+s.getS_name(
+));
+19. System.out.println("Student Age = "+s.getS_age())
+;
+20.
+21. }
+22. }
+Output
+Student id = 101
+Student Name = Gaurav
+Student Age = 24
+Update an Entity
+JPA allows us to change the records in database by updating an entity.
+JPA Entity Update Example
+Here, we will update the age of a student on the basis of primary key.
+This example contains the following steps: -
+1. Create an entity class named as StudentEntity.java under com.javatpoint.jpa.student
+package that contains attributes s_id, s_name and s_age.
+StudentEntity.java
+1. package com.javatpoint.jpa.student;
+2. import javax.persistence.*;
+3.
+4. @Entity
+5. @Table(name="student")
+6. public class StudentEntity {
+7.
+8. @Id
+9. private int s_id;
+10. private String s_name;
+11. private int s_age;
+12.
+13. public StudentEntity(int s_id, String s_name, int s_a
+ge) {
+14. super();
+15. this.s_id = s_id;
+16. this.s_name = s_name;
+17. this.s_age = s_age;
+18. }
+19.
+20. public StudentEntity() {
+21. super();
+22. }
+23.
+24. public int getS_id() {
+25. return s_id;
+26. }
+27.
+28. public void setS_id(int s_id) {
+29. this.s_id = s_id;
+30. }
+31.
+32. public String getS_name() {
+33. return s_name;
+34. }
+35.
+36. public void setS_name(String s_name) {
+37. this.s_name = s_name;
+38. }
+39.
+40. public int getS_age() {
+41. return s_age;
+42. }
+43.
+44. public void setS_age(int s_age) {
+45. this.s_age = s_age;
+46. }
+47. }
+Now, map the entity class and other databases configuration in Persistence.xml file.
+Persistence.xml
+1. <persistence>
+2. <persistence-unit name="Student_details">
+3.
+4. <class>com.javatpoint.jpa.student.StudentEntity</class>
+5.
+6. <properties>
+7. <property name="javax.persistence.jdbc.driver" value="com.mysq
+l.jdbc.Driver"/>
+8. <property name="javax.persistence.jdbc.url" value="jdbc:mysql:
+//localhost:3306/studentdata"/>
+9. <property name="javax.persistence.jdbc.user" value="root"/>
+10. <property name="javax.persistence.jdbc.password" value=""
+/>
+11. <property name="eclipselink.logging.level" value="SEVERE"
+/>
+12. <property name="eclipselink.ddlgeneration" value="create-or-extend-tables"/>
+13. </properties>
+14.
+15. </persistence-unit>
+16. </persistence>
+Create a persistence class named as UpdateStudent.java under com.javatpoint.jpa.update
+package to persist the entity object with data.
+UpdateStudent.java
+1. package com.javatpoint.jpa.update;
+2. import javax.persistence.*;
+3.
+4. import com.javatpoint.jpa.student.*;
+5. public class UpdateStudent {
+6.
+7. public static void main(String args[])
+8. {
+9. EntityManagerFactory emf=Persistence.createEntityManag
+erFactory("Student_details");
+10. EntityManager em=emf.createEntityManager();
+11.
+12.
+13.
+14. StudentEntity s=em.find(StudentEntity.class,102);
+
+15. System.out.println("Before Updation");
+16. System.out.println("Student id = "+s.getS_id());
+
+17. System.out.println("Student Name = "+s.getS_name(
+));
+18. System.out.println("Student Age = "+s.getS_age())
+;
+19.
+20. s.setS_age(30);
+21.
+22. System.out.println("After Updation");
+23. System.out.println("Student id = "+s.getS_id());
+
+24. System.out.println("Student Name = "+s.getS_name(
+));
+25. System.out.println("Student Age = "+s.getS_age())
+;
+26. }
+27. }
+Output:
+Before Updation
+Student id = 102
+Student Name = Ronit
+Student Age = 22
+After Updation
+Student id = 102
+Student Name = Ronit
+Student Age = 30
+DeleƟng an EnƟty
+To delete a record from database, EntityManager interface provides remove() method. The
+remove() method uses primary key to delete the particular record.
+JPA Entity Delete Example
+Here, we will remove the particular record of the student.
+This example contains the following steps: -
+ Create an enƟty class named as StudentEnƟty.java under com.javatpoint.jpa.student
+package that contains aƩributes s_id, s_name and s_age.
+StudentEntity.java
+1. package com.javatpoint.jpa.student;
+2. import javax.persistence.*;
+3.
+4. @Entity
+5. @Table(name="student")
+6. public class StudentEntity {
+7.
+8. @Id
+9. private int s_id;
+10. private String s_name;
+11. private int s_age;
+12.
+13. public StudentEntity(int s_id, String s_name, int s_a
+ge) {
+14. super();
+15. this.s_id = s_id;
+16. this.s_name = s_name;
+17. this.s_age = s_age;
+18. }
+19.
+20. public StudentEntity() {
+21. super();
+22. }
+23.
+24. public int getS_id() {
+25. return s_id;
+26. }
+27.
+28. public void setS_id(int s_id) {
+29. this.s_id = s_id;
+30. }
+31.
+32. public String getS_name() {
+33. return s_name;
+34. }
+35.
+36. public void setS_name(String s_name) {
+37. this.s_name = s_name;
+38. }
+39.
+40. public int getS_age() {
+41. return s_age;
+42. }
+43.
+44. public void setS_age(int s_age) {
+45. this.s_age = s_age;
+46. }
+47.
+48. }
+ Now, map the entity class and other databases confiuguration in Persistence.xml file.
+Persistence.xml
+1. <persistence>
+2. <persistence-unit name="Student_details">
+3.
+4. <class>com.javatpoint.jpa.student.StudentEntity</class>
+5.
+6. <properties>
+7. <property name="javax.persistence.jdbc.driver" value="com.mysq
+l.jdbc.Driver"/>
+8. <property name="javax.persistence.jdbc.url" value="jdbc:mysql:
+//localhost:3306/studentdata"/>
+9. <property name="javax.persistence.jdbc.user" value="root"/>
+10. <property name="javax.persistence.jdbc.password" value=""
+/>
+11. <property name="eclipselink.logging.level" value="SEVERE"
+/>
+12. <property name="eclipselink.ddlgeneration" value="create-or-extend-tables"/>
+13. </properties>
+14.
+15. </persistence-unit>
+16. </persistence>
+Deletion.java
+1. package com.javatpoint.jpa.delete;
+2. import javax.persistence.*;
+3. import com.javatpoint.jpa.student.*;
+4.
+5. public class DeleteStudent {
+6.
+7. public static void main(String args[])
+8. {
+9. EntityManagerFactory emf=Persistence.createEntityManagerFa
+ctory("Student_details");
+10. EntityManager em=emf.createEntityManager();
+11. em.getTransaction().begin();
+12.
+13. StudentEntity s=em.find(StudentEntity.class,102);
+14. em.remove(s);
+15. em.getTransaction().commit();
+16. emf.close();
+17. em.close();
+18.
+19. }
+20. }
+Output:
+AŌer the execuƟon of the program, the student table is generated under MySQL workbench.
+This table contains the student details. To fetch data, run select * from student query in
+MySQL.
+Before Deletion
+S_ID S_Name S_Age
+101 Gaurav 24
+102 Ronit 30
+103 Rahul 26
+After Deletion
+S_ID S_Name S_Age
+101 Gaurav 24
+103 Rahul 26
+SerializaƟon and DeserializaƟon in Java
+SerializaƟon in Java is a mechanism of wriƟng the state of an object into a byte-stream. It is
+mainly used in Hibernate, RMI, JPA, EJB and JMS technologies.
+The reverse operaƟon of serializaƟon is called deserializaƟon where byte-stream is converted
+into an object. The serializaƟon and deserializaƟon process is plaƞorm-independent, it means
+you can serialize an object on one plaƞorm and deserialize it on a different plaƞorm.
+For serializing the object, we call the writeObject() method of ObjectOutputStream class,
+and for deserializaƟon we call the readObject() method of ObjectInputStream class.
+Advantages of Java SerializaƟon
+It is mainly used to travel object's state on the network (that is known as marshalling).
+java.io.Serializable interface
+Serializable is a marker interface (has no data member and method). It is used to "mark" Java
+classes so that the objects of these classes may get a certain capability.
+The Cloneable and Remote are also marker interfaces.
+The Serializable interface must be implemented by the class whose object needs to be
+persisted.
+The String class and all the wrapper classes implement the java.io.Serializable interface by
+default.
+Let's see the example given below:
+Student.java
+1. import java.io.Serializable;
+2. public class Student implements Serializable{
+3. int id;
+4. String name;
+5. public Student(int id, String name) {
+6. this.id = id;
+7. this.name = name;
+8. }
+9. }
+In the above example, Student class implements Serializable interface. Now its objects can be
+converted into stream. The main class implementation of is showed in the next code.
+ObjectOutputStream class
+The ObjectOutputStream class is used to write primiƟve data types, and Java objects to an
+OutputStream. Only objects that support the java.io.Serializable interface can be wriƩen to streams.
+Constructor
+public ObjectOutputStream(OutputStream out) throws IOException {}
+ It creates an ObjectOutputStream that writes to the specified OutputStream.
+Important Methods
+1. public final void writeObject(Object obj) throws IOException {} - It
+writes the specified object to the ObjectOutputStream.
+2. public void flush() throws IOException {} - It flushes the current output
+stream.
+3. public void close() throws IOException {} - It closes the current output
+stream.
+ObjectInputStream class
+An ObjectInputStream deserializes objects and primitive data written using an
+ObjectOutputStream.
+Constructor
+public ObjectInputStream(InputStream in) throws IOException {} - It
+creates an ObjectInputStream that reads from the specified InputStream.
+Important Methods
+1. public final Object readObject() throws IOException,
+ClassNotFoundException{} - It reads an object from the input stream.
+2. public void close() throws IOException {} - It closes
+ObjectInputStream.
+Example of Java Serialization
+In this example, we are going to serialize the object of Student class from above code. The
+writeObject() method of ObjectOutputStream class provides the functionality to serialize the
+object. We are saving the state of the object in the file named f.txt.
+Persist.java
+1. import java.io.*;
+2. class Persist{
+3. public static void main(String args[]){
+4. try{
+5. //Creating the object
+6. Student s1 =new Student(211,"ravi");
+7. //Creating stream and writing the object
+8. FileOutputStream fout=new FileOutputStream("f.txt");
+9. ObjectOutputStream out=new ObjectOutputStream(fout);
+10. out.writeObject(s1);
+11. out.flush();
+12. //closing the stream
+13. out.close();
+14. System.out.println("success");
+15. }catch(Exception e){System.out.println(e);}
+16. }
+17. }
+Output:
+Success
+Student.java
+import java.io.Serializable;
+public class Student implements Serializable{
+ int id;
+ String name;
+ public Student(int id, String name) {
+ this.id = id;
+ this.name = name;
+ }
+}
+Persist.java
+import java.io.*;
+class Persist{
+ public static void main(String args[])throws Exception{
+ Student s1 =new Student(211,"ravi");
+ FileOutputStream fout=new FileOutputStream("f.txt");
+ ObjectOutputStream out=new ObjectOutputStream(fout);
+ out.writeObject(s1);
+ out.flush();
+ System.out.println("success");
+ }
+}
+Example of Java Deserialization
+Deserialization is the process of reconstructing the object from the serialized state. It is the
+reverse operation of serialization. Let's see an example where we are reading the data from
+a deserialized object.
+Deserialization is the process of reconstructing the object from the serialized state. It is the
+reverse operation of serialization. Let's see an example where we are reading the data from
+a deserialized object.
+Depersist.java
+1. import java.io.*;
+2. class Depersist{
+3. public static void main(String args[]){
+4. try{
+5. //Creating stream to read the object
+6. ObjectInputStream in=new ObjectInputStream(new FileInputStre
+am("f.txt"));
+7. Student s=(Student)in.readObject();
+8. //printing the data of the serialized object
+9. System.out.println(s.id+" "+s.name);
+10. //closing the stream
+11. in.close();
+12. }catch(Exception e){System.out.println(e);}
+13. }
+14. }
+Output
+211 ravi
+Java Serialization with Inheritance (IS-A Relationship)
+If a class implements Serializable interface then all its sub classes will also be serializable.
+Let's see the example given below:
+SerializeISA.java
+1. import java.io.Serializable;
+2. class Person implements Serializable{
+3. int id;
+4. String name;
+5. Person(int id, String name) {
+6. this.id = id;
+7. this.name = name;
+8. }
+9. }
+10. class Student extends Person{
+11. String course;
+12. int fee;
+13. public Student(int id, String name, String course, int f
+ee) {
+14. super(id,name);
+15. this.course=course;
+16. this.fee=fee;
+17. }
+18. }
+19. public class SerializeISA
+20. {
+21. public static void main(String args[])
+22. {
+23. try{
+24. //Creating the object
+25. Student s1 =new Student(211,"ravi","Engineering",50000)
+;
+26. //Creating stream and writing the object
+27. FileOutputStream fout=new FileOutputStream("f.txt");
+
+28. ObjectOutputStream out=new ObjectOutputStream(fout);
+
+29. out.writeObject(s1);
+30. out.flush();
+31. //closing the stream
+32. out.close();
+33. System.out.println("success");
+34. }catch(Exception e){System.out.println(e);}
+35. try{
+36. //Creating stream to read the object
+37. ObjectInputStream in=new ObjectInputStream(new FileInpu
+tStream("f.txt"));
+38. Student s=(Student)in.readObject();
+39. //printing the data of the serialized object
+40. System.out.println(s.id+" "+s.name+" "+s.course+" "+s.f
+ee);
+41. //closing the stream
+42. in.close();
+43. }catch(Exception e){System.out.println(e);}
+44. }
+45. }
+Output
+success
+211 ravi Engineering 50000
+The SerializeISA class has serialized the Student class object that extends the Person class
+which is Serializable. Parent class properties are inherited to subclasses so if parent class is
+Serializable, subclass would also be.
+Java Serialization with Aggregation (HAS-A Relationship)
+If a class has a reference to another class, all the references must be Serializable otherwise
+serialization process will not be performed. In such case, NotSerializableException is thrown
+at runtime.
+Address.java
+1. class Address{
+2. String addressLine,city,state;
+3. public Address(String addressLine, String city, String state)
+ {
+4. this.addressLine=addressLine;
+5. this.city=city;
+6. this.state=state;
+7. }
+8. }
+Student.java
+1. import java.io.Serializable;
+2. public class Student implements Serializable{
+3. int id;
+4. String name;
+5. Address address;//HAS-A
+6. public Student(int id, String name) {
+7. this.id = id;
+8. this.name = name;
+9. }
+10. }
+Since Address is not Serializable, you cannot serialize the instance of the Student class. Note:
+All the objects within an object must be Serializable.
+Java Serialization with the static data member
+If there is any static data member in a class, it will not be serialized because static is the part
+of class not object.
+Employee.java
+1. class Employee implements Serializable{
+2. int id;
+3. String name;
+4. static String company="SSS IT Pvt Ltd";//it won't be serializ
+ed
+5. public Student(int id, String name) {
+6. this.id = id;
+7. this.name = name;
+8. }
+9. }
+Java Serialization with array or collection
+Rule: In case of array or collecƟon, all the objects of array or collecƟon must be serializable. If
+any object is not serialiizable, serializaƟon will be failed.
+Externalizable in java
+The Externalizable interface provides the facility of writing the state of an object into a byte
+stream in compress format. It is not a marker interface.
+The Externalizable interface provides two methods:
+o public void writeExternal(ObjectOutput out) throws IOException
+o public void readExternal(ObjectInput in) throws IOException
+Java Transient Keyword
+In Java, Serialization is used to convert an object into a stream of the byte. The byte stream
+consists of the data of the instance as well as the type of data stored in that instance.
+Deserialization performs exactly opposite operation. It converts the byte sequence into original
+object data. During the serialization, when we do not want an object to be serialized we can
+use a transient keyword.
+Why to use the transient keyword?
+The transient keyword can be used with the data members of a class in order to avoid their
+serialization. For example, if a program accepts a user's login details and password. But we
+don't want to store the original password in the file. Here, we can use transient keyword and
+when JVM reads the transient keyword it ignores the original value of the object and instead
+stores the default value of the object.
+Syntax:
+private transient <member variable>;
+transient private <member variable>;
+
+Example of Java Transient Keyword
+Let's take an example, we have declared a class as Student, it has three data members id,
+name and age. If you serialize the object, all the values will be serialized but we don't want
+to serialize one value, e.g. age then we can declare the age data member as transient.
+In this example, we have created two classes Student and PersistExample. The age data
+member of the Student class is declared as transient, its value will not be serialized.
+If you deserialize the object, you will get the default value for transient variable.
+Let's create a class with transient variable.
+1. import java.io.*;
+2. public class Student implements Serializable{
+3. int id;
+4. String name;
+5. transient int age;//Now it will not be serialized
+6. public Student(int id, String name,int age) {
+7. this.id = id;
+8. this.name = name;
+9. this.age=age;
+10. }
+11. }
+12. class PersistExample{
+13. public static void main(String args[])throws Exception{
+
+14. Student s1 =new Student(211,"ravi",22);//creating objec
+t
+15. //writing object into file
+16. FileOutputStream f=new FileOutputStream("f.txt");
+17. ObjectOutputStream out=new ObjectOutputStream(f);
+18. out.writeObject(s1);
+19. out.flush();
+20. out.close();
+21. f.close();
+22. System.out.println("success");
+23. }
+24. }
+Output:
+Success
+Now write the code for deserialization.
+DePersist.java
+If you don't want to serialize any data member of a class, you can mark it as transient.
+Employee.java
+1. class Employee implements Serializable{
+2. transient int id;
+3. String name;
+4. public Student(int id, String name) {
+5. this.id = id;
+6. this.name = name;
+7. }
+8. }
+Now, id will not be serialized, so when you deserialize the object aŌer serializaƟon, you will
+not get the value of id. It will return default value always. In such case, it will return 0 because
+the data type of id is an integer.
+SerialVersionUID
+The serialization process at runtime associates an id with each Serializable class which is
+known as SerialVersionUID. It is used to verify the sender and receiver of the serialized object.
+The sender and receiver must be the same. To verify it, SerialVersionUID is used. The sender
+and receiver must have the same SerialVersionUID, otherwise, InvalidClassException will be
+thrown when you deserialize the object. We can also declare our own SerialVersionUID in the
+Serializable class. To do so, you need to create a field SerialVersionUID and assign a value to
+it. It must be of the long type with static and final. It is suggested to explicitly declare the
+serialVersionUID field in the class and have it private also. For example:
+private static final long serialVersionUID=1L;
+Now, the Serializable class will look like this:
+Employee.java
+1. import java.io.Serializable;
+2. class Employee implements Serializable{
+3. private static final long serialVersionUID=1L;
+4. int id;
+5. String name;
+6. public Student(int id, String name) {
+7. this.id = id;
+8. this.name = name;
+9. }
+10. } 
