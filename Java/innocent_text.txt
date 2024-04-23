@@ -1,0 +1,6 @@
+Problem Statement 3: Expanding the Investigation
+1. Beyond the Basics:
+➢ Objective: Explore and choose one additional String Matching Algorithm besides Naive
+Search and Boyer-Moore (e.g., Knuth-Morris-Pratt (KMP), Rabin-Karp).
+➢ Guidance: Research and understand the chosen algorithm's core concept and how it differs
+from Naive Search and Boyer-Moore. Resources like online tutorials or textbooks can be
