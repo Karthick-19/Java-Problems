@@ -16,7 +16,8 @@ package Java;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Arrays;
-
+//Logic in here is if current value minus target value gives the value which already exist in array
+//then current value and already existing value's addition will give the target:))
 public class TwoSum {
     public static void main(String[] args) {
         int[] arr = {3,2,4};

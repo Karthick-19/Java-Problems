@@ -1,3 +1,5 @@
+#Logic in here is if current value minus target value gives the value which already exist in array
+#then current value and already existing value's addition will give the target:))
 arr = [3,2,4]
 target = 6
 hmap = {}
