@@ -14,8 +14,11 @@
 package Java;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 //Logic in here is if current value minus target value gives the value which already exist in array
 //then current value and already existing value's addition will give the target:))
 public class TwoSum {
@@ -23,11 +26,27 @@ public class TwoSum {
         int[] arr = {3,2,4};
         int target = 6;
         twoSum(arr, target);
+        practiceTwoSum(arr, target);
+        otherApproach(arr, target);
     }
     public static void twoSum(int[] arr,int target){
         int[] res = new int[2];
         Map<Integer,Integer> map = new HashMap<>();
         for(int i = 0;i < arr.length;i++){
+            int val = target - arr[i];
+            if(map.containsKey(val)){
+                res[0] = val;
+                res[1] = arr[i];
+            }
+            map.put(arr[i],i);
+        }
+        String ans = Arrays.toString(res);
+        System.out.println(ans);
+    }
+    public static void practiceTwoSum(int[] arr, int target){
+        int res[] = new int[2];
+        Map<Integer,Integer> map = new HashMap<>();
+        for (int i = 0; i < arr.length; i++) {
             int val = target - arr[i];
             if(map.containsKey(val)){
                 res[0] = map.get(val);
@@ -37,5 +56,31 @@ public class TwoSum {
         }
         String ans = Arrays.toString(res);
         System.out.println(ans);
+    }
+
+    public static void otherApproach(int[] arr, int target){
+        List<Integer> list = new ArrayList<>();
+        for (int i = 0; i < arr.length; i++) {
+            list.add(arr[i]);
+        }
+        List<Integer> res = new ArrayList<>();
+        Collections.sort(list);
+        int l = 0;
+        int r = list.size() - 1;
+        while(l < r){
+            if(list.get(l) + list.get(r) == target){
+                res.add(list.get(l));
+                res.add(list.get(r));
+                System.out.println(res.toString());
+                return;
+            }
+            else if(list.get(l) + list.get(r) > target){
+                r--;
+            }
+            else{
+                l++;
+            }
+        }
+        System.out.println("No two sum");
     }
 }
