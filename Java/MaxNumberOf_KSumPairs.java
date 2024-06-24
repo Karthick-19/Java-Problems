@@ -37,10 +37,14 @@ public class MaxNumberOf_KSumPairs{
         Map<Integer,Integer> map = new HashMap<>();
         for(int num:nums){
             int val = k - num;
+            //Checking if the val is present in map and its get value is greater than 0
+            //increment op
             if(map.getOrDefault(val, 0) > 0){
                 op++;
+                //decrement the get value of val , so that it won't get counted again 
                 map.put(val,map.get(val)-1);
             }
+            //if val is not in map , add num to map with get value  + 1 
             map.put(num,map.getOrDefault(num, 0)+1);
         }
         System.out.println(op);

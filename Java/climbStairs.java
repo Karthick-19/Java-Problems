@@ -33,6 +33,23 @@ public class climbStairs {
         }
         // return arr[n]; 
         System.out.println(arr[n]);
+        System.out.println(climb_Stairs(n));
+    }
+    public static int climb_Stairs(int n) {
+        //Creating an empty array of size n + 1
+        int[] arr = new int[n+1];
+        //(do nothing) is the only way to stay on step 0
+        arr[0] = 1;
+        //Going to step 1 is possible only with 1 step
+        arr[1] = 1;
+        //Starting iteration of array from 2 since 0 and 1 already filled
+        //iterated till n+1 coz we are starting it from 2
+        for(int i = 2;i < n + 1;i++){
+            //Value of current step will be sum of previous step and previous of previous step
+            arr[i] = arr[i-1] + arr[i-2];
+        }
+        // This array contains required steps for each step returning our given step
+        return arr[n];
     }
     
 }
