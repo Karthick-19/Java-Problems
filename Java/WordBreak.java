@@ -31,18 +31,17 @@ public class WordBreak {
         dict.add("code");
         boolean[] t = new boolean[s.length()+1];
         t[0] = true;
-        for(int i =0; i< s.length();i++){
-            if(!t[i]){
+        for(int i = 0;i < s.length();i++){
+            if(t[i] == false){
                 continue;
             }
-            for (String x : dict) {
+            for(String x:dict){
                 int len = x.length();
                 int end = len + i;
-                
                 if(end > s.length()){
                     continue;
                 }
-                if(t[end]){
+                if(t[end] == true){
                     continue;
                 }
                 if(s.substring(i, end).equals(x)){
@@ -51,8 +50,5 @@ public class WordBreak {
             }
         }
         System.out.println(t[s.length()]);
-        for (boolean b : t) {
-            System.out.println(b);
-        }
     };
 }
